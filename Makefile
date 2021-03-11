@@ -23,18 +23,3 @@ coverage:
           cat .pkg.coverage >> coverage.txt) || exit 1; \
   done
 	@rm .pkg.coverage
-
-bin/dep:
-	@echo "-> dep install"
-	@go get github.com/golang/dep/cmd/dep
-	@go build -v -o bin/dep github.com/golang/dep/cmd/dep
-
-dep.ensure: bin/dep
-	@bin/dep ensure -v
-	@bin/dep prune -v
-	@find vendor -name "*_test.go" -exec rm -f {} \;
-
-#genmocks:
-#	@echo "--> Generate mocks"
-#	@go build -v -o bin/mockgen github.com/golang/mock/mockgen
-#	bin/mockgen -destination=./routing/logger_mock_test.go -package routing_test github.com/leanovate/microtools/logging Logger
